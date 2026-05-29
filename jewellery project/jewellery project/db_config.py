@@ -1,12 +1,13 @@
-import pymysql
 import os
+import psycopg2
+from psycopg2.extras import RealDictCursor
 
 def get_connection():
-    return pymysql.connect(
+    return psycopg2.connect(
         host=os.getenv('DB_HOST', 'localhost'),
-        user=os.getenv('DB_USER', 'root'),
-        password=os.getenv('DB_PASSWORD', 'Aryapatil1626'),
+        user=os.getenv('DB_USER', 'postgres'),
+        password=os.getenv('DB_PASSWORD', 'password'),
         database=os.getenv('DB_NAME', 'jewellerydb'),
-        cursorclass=pymysql.cursors.DictCursor,
-        charset='utf8mb4'
+        cursor_factory=RealDictCursor
     )
+ 
