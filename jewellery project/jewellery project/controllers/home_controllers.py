@@ -10,31 +10,26 @@ def home():
     return render_template("home.html")
 
 
-
 @home_bp.route('/login', methods=['GET', 'POST'])
 def AdminLogIn_index():
     error = ""
 
     if request.method == "POST":
-        Username = request.form.get("Username")
+        username = request.form.get("Username")
         password = request.form.get("password")
 
-        if Username == "admin" and password == "123":
-           # session["islogin"] = True
-           return render_template("AdminDashboard.html")
+        if username == "admin" and password == "123":
+            session["islogin"] = True
+            return render_template("AdminDashboard.html")
         else:
             error = "Invalid email or password"
 
     return render_template("adminlogin.html", error=error)
 
 
-
 @home_bp.route('/AdminDashboard')
 def AdminDashboard():
-   # if session.get("islogin"):
-         #return render_template("adminlogin.html")
-   # else:
-         return render_template("AdminDashboard.html")
+    return render_template("AdminDashboard.html")
 
 
 @home_bp.route('/custamerlogin', methods=['GET', 'POST'])
@@ -45,7 +40,6 @@ def custamer_index():
         email = request.form.get("email")
         password = request.form.get("password")
 
-
         conn = get_connection()
         cursor = conn.cursor(pymysql.cursors.DictCursor)
         cursor.execute(
@@ -54,16 +48,12 @@ def custamer_index():
         )
 
         user = cursor.fetchone()
-
-
         conn.close()
 
         if user:
-           session['cid']=user['CustomerID']
-           session['cnm']=user['FirstName']
-
-
-           return render_template("custamer.html" ,user=user)
+            session['cid'] = user['CustomerID']
+            session['cnm'] = user['FirstName']
+            return render_template("custamer.html", user=user)
         else:
             error = "Invalid email or password"
 
@@ -118,17 +108,13 @@ def customer_register():
     return render_template("custamerlogin.html", reg_error=reg_error, success=success)
 
 
-
 @home_bp.route('/custamerDashboard')
 def custamerDashboard():
-   # if session.get("islogin"):
-        #return render_template("adminlogin.html")
-   # else:
-        return render_template("custamer.html")
+    return render_template("custamer.html")
+
 
 @home_bp.route('/myorders')
 def my_orders():
-
     cid = session.get("cid")
 
     if not cid:

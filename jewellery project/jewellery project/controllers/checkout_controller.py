@@ -1,5 +1,4 @@
-
-from flask import Blueprint, session, redirect, url_for, render_template
+from flask import Blueprint, session, redirect, url_for, render_template, request
 from datetime import datetime
 from db_config import get_connection
 
@@ -72,7 +71,7 @@ def checkout_index():
     for item in cart:
         weight = float(item["weight"])
         qty = int(item["qty"])
-        pid=int(item["id"])
+        pid = int(item["id"])
 
         amt = weight * rate * qty
 
@@ -92,7 +91,7 @@ def checkout_index():
         ))
 
         sr += 1
-        cur.execute("update products set QuantityInStock=QuantityInStock-%s where ProductID=%s",(qty,pid))
+        cur.execute("UPDATE Products SET QuantityInStock=QuantityInStock-%s WHERE ProductID=%s", (qty, pid))
         con.commit()
 
     # -------- COMMIT ----------
@@ -111,9 +110,6 @@ def checkout_index():
     session.modified = True
 
     return redirect("/Payment1")
-
-from flask import Blueprint, session, request, redirect, render_template
-from datetime import datetime
 
 
 Payment = Blueprint('Payment', __name__)
@@ -178,6 +174,7 @@ def payment():
         orderlist=orderlist,
         today=datetime.now().strftime("%Y-%m-%d")
     )
+
 @Payment.route("/Invoice", methods=["GET"])
 def Invoice():
 
@@ -187,7 +184,7 @@ def Invoice():
     pid = request.args.get("pid")
 
     # ---------------- PAYMENT ----------------
-    cur.execute("SELECT * FROM payment WHERE PaymentID=%s", (pid,))
+    cur.execute("SELECT * FROM Payment WHERE PaymentID=%s", (pid,))
     paymentdata = cur.fetchall()
 
     if not paymentdata:
@@ -196,18 +193,22 @@ def Invoice():
     order_id = paymentdata[0]["OrderID"]
 
     # ---------------- ORDER MASTER ----------------
-    cur.execute("SELECT * FROM ordermaster WHERE OrderID=%s", (order_id,))
+    cur.execute("SELECT * FROM OrderMaster WHERE OrderID=%s", (order_id,))
     orderMaster = cur.fetchall()
 
     # ---------------- ORDER DETAILS ----------------
     cur.execute("""
-        select OrderDetailID,
-        products.ProductName,TypeName,Quantity,
-        Rate,Subtotal 
-        from orderdetails,products,jwellerytype 
-        where orderdetails.ProductID=products.ProductID 
-        and products.TypeID=jwellerytype.TypeID 
-        and orderdetails.OrderID=%s
+        SELECT 
+            OrderDetailID,
+            Products.ProductName,
+            TypeName,
+            Quantity,
+            Rate,
+            Subtotal 
+        FROM OrderDetails
+        JOIN Products ON OrderDetails.ProductID = Products.ProductID 
+        JOIN JwelleryType ON Products.TypeID = JwelleryType.TypeID 
+        WHERE OrderDetails.OrderID=%s
     """, (order_id,))
 
     order_details = cur.fetchall()
@@ -217,7 +218,7 @@ def Invoice():
 
     # ---------------- CUSTOMER ----------------
     cust_id = orderMaster[0]["CustomerID"]   # correct index after SELECT
-    cur.execute("SELECT * FROM customer WHERE CustomerID=%s", (cust_id,))
+    cur.execute("SELECT * FROM Customer WHERE CustomerID=%s", (cust_id,))
     cust_data = cur.fetchall()
 
     con.close()

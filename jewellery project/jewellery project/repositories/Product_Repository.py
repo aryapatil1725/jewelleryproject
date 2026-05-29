@@ -1,5 +1,6 @@
 from db_config import get_connection
 import pymysql
+
 class ProductRepository:
 
     def get_all(self):
@@ -15,7 +16,8 @@ class ProductRepository:
                 p.Weight,
                 p.QuantityInStock
             FROM Products p
-            JOIN JwelleryType t ON p.TypeID = t.TypeID order by p.ProductID
+            JOIN JwelleryType t ON p.TypeID = t.TypeID 
+            ORDER BY p.ProductID
         """)
 
         data = cursor.fetchall()
@@ -83,4 +85,3 @@ class ProductRepository:
 
         conn.close()
         return data
-

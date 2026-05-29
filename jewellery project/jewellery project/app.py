@@ -8,8 +8,7 @@ from controllers.OrderMaster_controllers import order_bp
 from controllers.home_controllers import home_bp
 from controllers.report_controllers import report_bp
 from controllers.search_controllers import searchbp
-from controllers.checkout_controller import Checkout
-from controllers.checkout_controller import  Payment
+from controllers.checkout_controller import Checkout, Payment
 
 app = Flask(__name__)
 
@@ -25,8 +24,7 @@ app.register_blueprint(searchbp)
 app.register_blueprint(Checkout)
 app.register_blueprint(Payment)
 
-
-app.secret_key="abc123"
+app.secret_key = "abc123"
 
 if __name__ == "__main__":
     app.run(debug=True)
