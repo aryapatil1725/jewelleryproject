@@ -27,5 +27,6 @@ app.register_blueprint(Payment)
 
 
 app.secret_key="abc123"
+
 if __name__ == "__main__":
     app.run(debug=True)
