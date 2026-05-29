@@ -1,0 +1,65 @@
+CREATE TABLE Customer
+(
+CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+FirstName VARCHAR(100),
+LastName VARCHAR(100),
+PhoneNumber VARCHAR(15),
+Email VARCHAR(150),
+Address VARCHAR(255),
+Password VARCHAR(255)
+)
+
+CREATE TABLE Products
+ (
+ProductID INT PRIMARY KEY AUTO_INCREMENT,
+ProductName VARCHAR(150) ,
+TypeID INT,
+ForGender  VARCHAR(20),
+Weight  VARCHAR(100),
+QuantityInStock INT,
+Description VARCHAR(90),
+Photo VARCHAR(70),
+);
+
+
+
+CREATE TABLE OrderMaster
+(
+OrderID INT PRIMARY KEY AUTO_INCREMENT,
+CustomerID VARCHAR(100),
+OrderDate VARCHAR(100),
+TotalAmount VARCHAR(100),
+LabourCharges VARCHAR(100),
+GSTAmt VARCHAR(90)
+GrandTotal int
+)
+
+
+CREATE TABLE OrderDetails
+(
+OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
+OrderID int,
+ProductID int,
+Quantity VARCHAR(100),
+Rate VARCHAR(100)
+Subtotal VARCHAR(90)
+)
+
+CREATE TABLE JwelleryType
+(
+TypeId INT PRIMARY KEY AUTO_INCREMENT,
+TypeName VARCHAR(100)
+)
+
+CREATE TABLE Payment
+(
+PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+OrderId int,
+PaymentDate VARCHAR(100),
+AmountPaid VARCHAR(100),
+PaymentMethod VARCHAR(100)
+)
+
+
+
+

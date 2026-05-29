@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Date Wise Payment Report</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .report-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            border: 2px solid #F0C75E;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .report-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F0C75E;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .form-control {
+            padding: 12px 15px;
+            border: 2px solid #F0C75E;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .form-control:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+        }
+        .search-section {
+            background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #F0C75E;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            border-color: #C5A028;
+        }
+        .table tbody tr:hover {
+            background-color: #FFF9E6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-container">
+    <h2>Date Wise Payment Report</h2>
+
+    <form method="post">
+        <div class="search-section">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="fdate">From Date</label>
+                        <input type="date" name="fdate" id="fdate" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="form-group">
+                        <label for="tdate">To Date</label>
+                        <input type="date" name="tdate" id="tdate" class="form-control" required>
+                    </div>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100" style="background: linear-gradient(135deg, #D4AF37, #C5A028); border: none;">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if payments %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Payment ID</th>
+                <th>Order ID</th>
+                <th>Payment Date</th>
+                <th>Amount</th>
+                <th>Payment Method</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in payments %}
+            <tr>
+                <td>{{ p.PaymentID }}</td>
+                <td>{{ p.OrderID }}</td>
+                <td>{{ p.PaymentDate }}</td>
+                <td>{{ p.AmountPaid }}</td>
+                <td>{{ p.PaymentMethod }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+</body>
+</html>

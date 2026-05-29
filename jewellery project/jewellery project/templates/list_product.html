@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Product List</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">💍 Product List</h3>
+        </div>
+        <div class="card-body">
+            <a href="/product/add" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Add Product
+            </a>
+
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Gender</th>
+                            <th>Weight (g)</th>
+                            <th>Stock</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in products %}
+                        <tr>
+                            <td><strong>{{ p.ProductID }}</strong></td>
+                            <td>{{ p.ProductName }}</td>
+                            <td>{{ p.TypeName }}</td>
+                            <td>{{ p.ForGender }}</td>
+                            <td>{{ p.Weight }}</td>
+                            <td>{{ p.QuantityInStock }}</td>
+                            <td>
+                                <a href="/product/edit/{{ p.ProductID }}" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a href="/product/delete/{{ p.ProductID }}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this product?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

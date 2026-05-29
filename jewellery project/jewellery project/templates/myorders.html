@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders | Golden Spark</title>
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #d4af37 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .orders-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 30px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-btn:hover {
+            background: #d4af37;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .back-btn i {
+            margin-right: 10px;
+        }
+
+        .orders-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd700;
+            animation: slideInDown 0.8s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .orders-header h2 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .orders-header p {
+            font-size: 1.2rem;
+            color: #666;
+            margin: 0;
+        }
+
+        .orders-header i {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 20px;
+            display: block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .order-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 2px solid #f0c75e;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+            border-color: #d4af37;
+        }
+
+        .order-header {
+            background: linear-gradient(135deg, #f4e5bc 0%, #faf8f1 100%);
+            padding: 25px;
+            border-bottom: 3px solid #d4af37;
+        }
+
+        .order-id {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #b8860b;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .order-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            font-size: 1rem;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .order-meta div {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .order-meta i {
+            color: #d4af37;
+        }
+
+        .order-total {
+            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+            display: inline-block;
+        }
+
+        .order-items {
+            padding: 25px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .order-item:hover {
+            background: #e9ecef;
+            border-color: #f0c75e;
+        }
+
+        .order-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .product-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            margin-right: 25px;
+            border: 2px solid #ffd700;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-name {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #212529;
+            margin-bottom: 10px;
+        }
+
+        .product-details {
+            color: #6c757d;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .product-details i {
+            color: #d4af37;
+            margin-right: 5px;
+        }
+
+        .item-price {
+            text-align: right;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: #b8860b;
+            min-width: 120px;
+        }
+
+        .empty-orders {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd700;
+        }
+
+        .empty-orders i {
+            font-size: 6rem;
+            margin-bottom: 25px;
+            color: #d4af37;
+            opacity: 0.7;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .empty-orders h3 {
+            font-size: 2rem;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .empty-orders p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.6);
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .orders-header h2 {
+                font-size: 1.8rem;
+            }
+
+            .order-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .product-img {
+                margin-right: 0;
+                margin-bottom: 20px;
+            }
+
+            .item-price {
+                text-align: center;
+                margin-top: 15px;
+            }
+
+            .order-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .order-total {
+                width: 100%;
+                text-align: center;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="orders-container">
+        <a href="/custamerDashboard" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <div class="orders-header">
+            <i class="fas fa-box-open"></i>
+            <h2>My Orders</h2>
+            <p>Track your jewellery orders and view your purchase history</p>
+        </div>
+
+        {% if orders %}
+            {% for order in orders %}
+            <div class="order-card">
+                <div class="order-header">
+                    <div class="order-id">
+                        <i class="fas fa-shopping-bag"></i>
+                        Order #{{ order['OrderID'] }}
+                    </div>
+                    <div class="order-meta">
+                        <div>
+                            <i class="fas fa-calendar-alt"></i>
+                            <strong>Date:</strong> {{ order['OrderDate'].strftime('%B %d, %Y') if order['OrderDate'] else order['OrderDate'] }}
+                        </div>
+                        <div>
+                            <i class="fas fa-boxes"></i>
+                            <strong>Items:</strong> {{ order['items']|length }}
+                        </div>
+                    </div>
+                    <div class="order-total">
+                        ₹ {{ '{:,.2f}'.format(order['GrandTotal']) if order['GrandTotal'] else '0.00' }}
+                    </div>
+                </div>
+
+                <div class="order-items">
+                    {% for item in order['items'] %}
+                    <div class="order-item">
+                        <img src="{{ url_for('static', filename='uploads/' + item['Photo']) }}" 
+                             class="product-img" 
+                             alt="{{ item['ProductName'] }}"
+                             onerror="this.src='https://via.placeholder.com/100x100?text=No+Image'">
+                        
+                        <div class="product-info">
+                            <div class="product-name">{{ item['ProductName'] }}</div>
+                            <div class="product-details">
+                                <i class="fas fa-layer-group"></i> <strong>Quantity:</strong> {{ item['Quantity'] }} <br>
+                                <i class="fas fa-tag"></i> <strong>Rate:</strong> ₹ {{ '{:,.2f}'.format(item['Rate']) if item['Rate'] else '0.00' }}
+                            </div>
+                        </div>
+                        
+                        <div class="item-price">
+                            ₹ {{ '{:,.2f}'.format(item['Subtotal']) if item['Subtotal'] else '0.00' }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-orders">
+                <i class="fas fa-box-open"></i>
+                <h3>No Orders Yet</h3>
+                <p>You haven't placed any orders. Start shopping now!</p>
+                <a href="/Searchallproduct" class="btn btn-primary">
+                    <i class="fas fa-shopping-cart" style="margin-right: 10px;"></i>
+                    Browse Products
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Add sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 3000);
+        }
+
+        setInterval(createSparkle, 500);
+    </script>
+
+</body>
+</html>

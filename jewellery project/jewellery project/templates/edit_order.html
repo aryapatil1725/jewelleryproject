@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Order</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .edit-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            border: 2px solid #F0C75E;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .edit-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F0C75E;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .form-control, .form-select {
+            width: 100% !important;
+            padding: 12px 15px;
+            border: 2px solid #F0C75E;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            font-size: 1.1em;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #C5A028, #B8941F);
+        }
+    </style>
+</head>
+<body>
+
+<div class="edit-container">
+    <h2>Edit Order</h2>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="customerid">Customer</label>
+            <select name="customerid" id="customerid" class="form-select" required>
+                {% for c in customerlist %}
+                    <option value="{{ c.CustomerID }}"
+                    {% if c.CustomerID == order.CustomerID %} selected {% endif %}>
+                    {{ c.FirstName }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="orderdate">Order Date</label>
+            <input type="date" name="orderdate" id="orderdate" class="form-control" value="{{ order.OrderDate }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="total">Total Amount</label>
+            <input type="text" name="total" id="total" class="form-control" value="{{ order.TotalAmount }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="labour">Labour Charges</label>
+            <input type="text" name="labour" id="labour" class="form-control" value="{{ order.LabourCharges }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="gst">GST Amount</label>
+            <input type="text" name="gst" id="gst" class="form-control" value="{{ order.GSTAmt }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="grand">Grand Total</label>
+            <input type="text" name="grand" id="grand" class="form-control" value="{{ order.GrandTotal }}" required>
+        </div>
+
+        <div class="button-group">
+            <button type="submit" class="btn btn-primary btn-action">Update</button>
+            <a href="/orderlist" class="btn btn-secondary btn-action">Cancel</a>
+        </div>
+    </form>
+</div>
+
+</body>
+</html>

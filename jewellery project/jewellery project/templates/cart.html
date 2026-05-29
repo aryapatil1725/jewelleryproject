@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Jewellery Shop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 100px 0 50px 0;
+        }
+
+        .cart-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .cart-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .cart-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .cart-header .item-count {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        .cart-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .cart-items {
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFFFFF 100%);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cart-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .cart-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.2);
+            border-color: rgba(212, 175, 55, 0.3);
+        }
+
+        .cart-item:hover::before {
+            transform: scaleX(1);
+        }
+
+        .cart-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .item-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 15px;
+            overflow: hidden;
+            background: white;
+            border: 2px solid #F0C75E;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .cart-item:hover .item-image img {
+            transform: scale(1.1);
+        }
+
+        .item-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .item-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a1a2e;
+            margin-bottom: 8px;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .meta-item {
+            background: linear-gradient(135deg, #D4AF3715, #C5A02815);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #D4AF37;
+        }
+
+        .item-price {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .item-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 30px;
+            padding: 5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .qty-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qty-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .qty-value {
+            width: 50px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .remove-btn {
+            background: linear-gradient(135deg, #D4AF37, #B8931A);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .remove-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+        }
+
+        .summary-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F0C75E;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .summary-value.material {
+            color: #D4AF37;
+        }
+
+        .summary-value.labour {
+            color: #C5A028;
+        }
+
+        .summary-value.gst {
+            color: #F0C75E;
+        }
+
+        .summary-value.total {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 24px;
+        }
+
+        .summary-total {
+            border-top: 2px solid #F0C75E;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 15px 30px;
+            background: white;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .continue-btn:hover {
+            background: #D4AF37;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .empty-cart {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .empty-cart i {
+            font-size: 80px;
+            color: #D4AF37;
+            margin-bottom: 30px;
+        }
+
+        .empty-cart h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart p {
+            font-size: 16px;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .empty-cart .btn-primary {
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .empty-cart .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .stock-error {
+            background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+            border-left: 4px solid #D4AF37;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #C5A028;
+            font-weight: 500;
+        }
+
+        @media (max-width: 992px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .item-image {
+                width: 100%;
+                height: 200px;
+            }
+
+            .item-actions {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .cart-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'base.html' %}
+
+    <div class="cart-wrapper">
+        <div class="cart-header">
+            <h1><i class="fas fa-shopping-cart me-3"></i>Shopping Cart</h1>
+            <div class="item-count">{{ cart|length }} Items</div>
+        </div>
+
+        {% if stock_Error %}
+        <div class="stock-error">
+            <i class="fas fa-exclamation-triangle me-2"></i>
+            {{ stock_Error }}
+        </div>
+        {% endif %}
+
+         {% if cart %}
+         <div class="cart-content">
+             <div class="cart-items">
+                 {% for item in cart %}
+                 {% if item.get('photo') and item.get('name') %}
+                 <div class="cart-item">
+                     <div class="item-image">
+                         <img src="{{ url_for('static', filename='uploads/' + item['photo']) }}" alt="{{ item.get('name', 'Product') }}">
+                     </div>
+                    
+                    <div class="item-details">
+                        <h3 class="item-name">{{ item.get('name', 'Product') }}</h3>
+                        <div class="item-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-weight-hanging me-1"></i>{{ item.get('weight', 0) }}g
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-tag me-1"></i>₹14,000/g
+                            </span>
+                        </div>
+                        <div class="item-price">
+                            ₹{{ (item.get('weight', 0)|int * 14000) * item.get('qty', 1)|int }}
+                        </div>
+                    </div>
+
+                    <div class="item-actions">
+                        <div class="quantity-control">
+                            <form method="post" action="/showcart" class="d-inline">
+                                <input type="hidden" name="prod_id" value="{{ item.get('id', 0) }}">
+                                <button type="submit" name="btn" value="Decrease" class="qty-btn">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </form>
+                            <span class="qty-value">{{ item.get('qty', 1) }}</span>
+                            <form method="post" action="/showcart" class="d-inline">
+                                <input type="hidden" name="prod_id" value="{{ item.get('id', 0) }}">
+                                <button type="submit" name="btn" value="Increase" class="qty-btn">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </form>
+                        </div>
+                        <form method="post" action="/showcart">
+                            <input type="hidden" name="prod_id" value="{{ item.get('id', 0) }}">
+                            <button type="submit" name="btn" value="Remove" class="remove-btn" onclick="return confirm('Remove this item from cart?')">
+                                <i class="fas fa-trash-alt"></i> Remove
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+            <div class="cart-summary">
+                <h2 class="summary-title"><i class="fas fa-receipt me-2"></i>Order Summary</h2>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Material Cost</span>
+                    <span class="summary-value material">₹{{ grand_total }}</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">Labour Charges</span>
+                    <span class="summary-value labour">₹{{ labour_total }}</span>
+                </div>
+                
+                <div class="summary-row">
+                    <span class="summary-label">GST (5%)</span>
+                    <span class="summary-value gst">₹{{ gst }}</span>
+                </div>
+                
+                <div class="summary-row summary-total">
+                    <span class="summary-label" style="font-weight: 600; font-size: 18px;">Grand Total</span>
+                    <span class="summary-value total">₹{{ final_total }}</span>
+                </div>
+
+                <a href="/checkout" class="checkout-btn">
+                    <i class="fas fa-lock me-2"></i>Proceed to Checkout
+                </a>
+                
+                <a href="/Searchallproduct" class="continue-btn">
+                    <i class="fas fa-arrow-left me-2"></i>Continue Shopping
+                </a>
+            </div>
+        </div>
+        {% else %}
+        <div class="empty-cart">
+            <i class="fas fa-shopping-basket"></i>
+            <h2>Your Cart is Empty</h2>
+            <p>Looks like you haven't added any items to your cart yet.</p>
+            <a href="/Searchallproduct" class="btn btn-primary">
+                <i class="fas fa-shopping-bag me-2"></i>Browse Products
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

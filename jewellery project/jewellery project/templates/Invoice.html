@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Invoice #1230</title>
+
+<link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --gold:#c9a96e;
+    --dark:#1f2937;
+    --light:#6b7280;
+    --border:#e5e7eb;
+    --bg:#f9fafb;
+}
+
+/* BODY */
+body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    padding:40px;
+    margin:0;
+    color:var(--dark);
+}
+
+/* CONTAINER */
+.invoice{
+    max-width:900px;
+    margin:auto;
+    background:#fff;
+    border-radius:12px;
+    padding:50px;
+    box-shadow:0 20px 40px rgba(0,0,0,0.08);
+    border-top:5px solid var(--gold);
+}
+
+/* HEADER */
+.header{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:40px;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+}
+
+.logo{
+    width:50px;
+    height:50px;
+    background:var(--gold);
+    color:#fff;
+    font-weight:700;
+    font-size:24px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:8px;
+    margin-right:12px;
+}
+
+.brand-text{
+    font-weight:600;
+    font-size:18px;
+}
+
+.invoice-title{
+    text-align:right;
+}
+
+.invoice-title h1{
+    margin:0;
+    font-size:34px;
+    color:var(--gold);
+}
+
+.meta{
+    font-size:14px;
+    color:var(--light);
+    margin-top:8px;
+}
+
+/* STATUS */
+.status{
+    display:inline-block;
+    margin-top:10px;
+    padding:5px 12px;
+    border-radius:20px;
+    background:#fff7e6;
+    color:#b38c3d;
+    font-size:12px;
+}
+
+/* BILLING */
+.billing{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-bottom:40px;
+}
+
+.box h3{
+    font-size:12px;
+    text-transform:uppercase;
+    color:var(--light);
+    margin-bottom:10px;
+}
+
+.box p{
+    margin:0;
+    line-height:1.6;
+}
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    text-align:left;
+    font-size:12px;
+    text-transform:uppercase;
+    padding:12px 0;
+    border-bottom:2px solid var(--gold);
+    color:var(--light);
+}
+
+td{
+    padding:18px 0;
+    border-bottom:1px solid var(--border);
+}
+
+.text-right{
+    text-align:right;
+}
+
+.bold{
+    font-weight:600;
+}
+
+/* SUMMARY */
+.summary{
+    margin-top:30px;
+    width:320px;
+    margin-left:auto;
+}
+
+.row{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+
+/* TOTAL */
+.total{
+    margin-top:15px;
+    padding-top:15px;
+    border-top:2px solid var(--border);
+    font-size:20px;
+    font-weight:700;
+    color:var(--gold);
+}
+
+/* FOOTER */
+.footer{
+    margin-top:50px;
+    padding-top:20px;
+    border-top:1px solid var(--border);
+    display:flex;
+    justify-content:space-between;
+    font-size:13px;
+    color:var(--light);
+}
+
+/* GOLD BUTTONS */
+.btn-gold{
+    background:var(--gold);
+    color:#fff;
+    border:2px solid var(--gold);
+    padding:10px 24px;
+    font-weight:600;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    display:inline-block;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+.btn-gold:hover{
+    background:#b8954e;
+    border-color:#b8954e;
+    color:#fff;
+}
+
+.btn-gold-outline{
+    background:transparent;
+    color:var(--gold);
+    border:2px solid var(--gold);
+    padding:10px 24px;
+    font-weight:600;
+    transition:all 0.3s ease;
+    cursor:pointer;
+    display:inline-block;
+    text-decoration:none;
+    border-radius:4px;
+}
+
+.btn-gold-outline:hover{
+    background:var(--gold);
+    color:#fff;
+}
+
+/* PRINT */
+@media print{
+    body{background:#fff;padding:0;}
+    .invoice{box-shadow:none;border:none;}
+    .d-flex {display: none !important;}
+    .btn {display: none !important;}
+    .btn-gold {display: none !important;}
+    .btn-gold-outline {display: none !important;}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="invoice">
+
+<!-- HEADER -->
+<div class="header">
+
+<div class="brand">
+<div class="logo">J</div>
+<div class="brand-text">
+Jewellery<br>
+<span style="font-size:12px;color:var(--light);font-weight:400;">
+Discovery Designs
+</span>
+</div>
+</div>
+
+<div class="invoice-title">
+<h1>INVOICE</h1>
+<div class="meta">
+<b>#{{paymentdata[0]["PaymentID"]}}</b><br>
+Issued:{{paymentdata[0]["PaymentDate"]}}
+</div>
+<div class="status">Due in 4 days</div>
+</div>
+
+</div>
+
+<!-- BILLING -->
+<div class="billing">
+
+<div class="box">
+<h3>From</h3>
+<p><strong>Discovery Designs</strong></p>
+<p>41 St Vincent Place<br>
+Glasgow G1 2ER<br>
+Scotland</p>
+</div>
+
+<div class="box">
+<h3>Bill To</h3>
+<p>Name:- <strong>{{cust_data[0]["FirstName"]}}  {{ cust_data[0]["LastName"]}}</strong></p>
+<p>Phone No:- <strong>{{cust_data[0]["PhoneNumber"]}}</strong></p>
+<p>Email:- <strong>{{cust_data[0]["Email"]}}</strong></p>
+<p>Address:- <strong>{{cust_data[0]["Address"]}}</strong></p>
+</div>
+
+</div>
+
+<!-- TABLE -->
+<table>
+<thead>
+<tr>
+<th>Description</th>
+<th class="text-right">Qty</th>
+<th class="text-right">Price</th>
+<th class="text-right">Total</th>
+</tr>
+</thead>
+
+<tbody>
+
+  {% for data in order_details %}
+<tr>
+<td>
+<span class="bold">{{data["ProductName"]}}</span><br>
+<small style="color:var(--light)">{{data["TypeName"]}}</small>
+</td>
+<td class="text-right">{{data["Quantity"]}}</td>
+<td class="text-right">{{data["Rate"]}}</td>
+<td class="text-right bold">{{data["Subtotal"]}}</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+<!-- SUMMARY -->
+<div class="summary">
+
+<div class="row">
+<span>Subtotal</span>
+<span>{{orderMaster[0]["TotalAmount"]}}</span>
+</div>
+
+<div class="row">
+<span>Labour charges</span>
+<span>{{orderMaster[0]["LabourCharges"]}}</span>
+</div>
+
+<div class="row">
+<span>Tax (5%)</span>
+<span>{{orderMaster[0]["GSTAmt"]}}</span>
+</div>
+
+<div class="row">
+<span>Payments</span>
+<span style="color:#e74c3c;">{{orderMaster[0]["GrandTotal"]}}</span>
+</div>
+
+
+
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+
+<div>
+<strong>Payment Terms:</strong> Pay within 4 days
+</div>
+
+<div>
+support@discoverydesigns.co.uk
+</div>
+
+</div>
+
+</div>
+ <div class="d-flex gap-2 mt-4 no-print">
+
+
+    <button type="button" class="btn-gold" onclick="window.print()">
+        Print
+    </button>
+
+
+    <a href="/Searchallproduct" class="btn-gold-outline">
+        Back to Dashboard
+    </a>
+
+</div>
+</body>
+</html>

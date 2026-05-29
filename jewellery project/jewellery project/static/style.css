@@ -1,0 +1,417 @@
+/* White + Gold Theme for Jewellery Management System - Clean & Elegant
+   Primary: White (#FFFFFF)
+   Accent: Gold (#D4AF37)
+*/
+
+body {
+    background: #FFFFFF !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+}
+
+/* Ensure all page backgrounds are white */
+html, body {
+    background-color: #FFFFFF !important;
+}
+
+/* Container backgrounds */
+.container, .card, .card-body, .card-header {
+    background: #FFFFFF !important;
+}
+
+/* Navbar Styling */
+.navbar {
+    background: linear-gradient(135deg, #D4AF37, #C5A028) !important;
+    box-shadow: 0 4px 6px rgba(212, 175, 55, 0.2);
+}
+
+.navbar-brand {
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Card Styling */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(212, 175, 55, 0.15);
+    background: white;
+    margin-bottom: 20px;
+}
+
+.card-header {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: white;
+    font-weight: 600;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 15px 20px;
+}
+
+/* Table Styling */
+.table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.1);
+}
+
+.table thead {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    color: white;
+}
+
+.table thead th {
+    border: none;
+    padding: 15px;
+    font-weight: 600;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #FFF9E6;
+    transform: scale(1.01);
+}
+
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+/* Button Styling - Gold Theme */
+.btn-primary {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #C5A028, #B8931A);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+    color: white;
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, #C5A028, #B8931A);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #F0C75E, #D4AF37);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #D4AF37, #B8931A);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #C5A028, #A88316);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.btn-info:hover {
+    background: linear-gradient(135deg, #C5A028, #B8931A);
+    transform: translateY(-2px);
+    color: white;
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #E0C368, #D4AF37);
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: 500;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    transform: translateY(-2px);
+    color: white;
+}
+
+/* Form Styling */
+.form-control {
+    border: 2px solid #F0C75E;
+    border-radius: 10px;
+    padding: 12px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #D4AF37;
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+.form-label {
+    font-weight: 600;
+    color: #C5A028;
+    margin-bottom: 8px;
+}
+
+/* Headings */
+h2, h3, h4 {
+    color: #C5A028;
+    font-weight: 700;
+}
+
+/* Links */
+a {
+    color: #D4AF37;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #C5A028;
+    text-decoration: underline;
+}
+
+/* Container */
+.container {
+    padding: 30px 15px;
+}
+
+/* Alert Styling */
+.alert {
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.alert-info {
+    background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+    color: #C5A028;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+    color: #C5A028;
+}
+
+.alert-danger {
+    background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+    color: #C5A028;
+}
+
+/* Badge Styling */
+.badge {
+    padding: 8px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+}
+
+/* Outline Button Styling - Gold Theme */
+.btn-outline-primary {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border-color: #C5A028;
+    color: white;
+}
+
+.btn-outline-success {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.btn-outline-success:hover {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border-color: #C5A028;
+    color: white;
+}
+
+.btn-outline-warning {
+    border-color: #F0C75E;
+    color: #F0C75E;
+}
+
+.btn-outline-warning:hover {
+    background: linear-gradient(135deg, #F0C75E, #D4AF37);
+    border-color: #D4AF37;
+    color: white;
+}
+
+.btn-outline-info {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.btn-outline-info:hover {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border-color: #C5A028;
+    color: white;
+}
+
+.btn-outline-danger {
+    border-color: #D4AF37;
+    color: #D4AF37;
+}
+
+.btn-outline-danger:hover {
+    background: linear-gradient(135deg, #D4AF37, #B8931A);
+    border-color: #B8931A;
+    color: white;
+}
+
+.btn-outline-secondary {
+    border-color: #E0C368;
+    color: #E0C368;
+}
+
+.btn-outline-secondary:hover {
+    background: linear-gradient(135deg, #E0C368, #D4AF37);
+    border-color: #D4AF37;
+    color: white;
+}
+
+/* Text Colors */
+.text-primary {
+    color: #D4AF37 !important;
+}
+
+.text-success {
+    color: #C5A028 !important;
+}
+
+.text-warning {
+    color: #F0C75E !important;
+}
+
+.text-info {
+    color: #D4AF37 !important;
+}
+
+.text-danger {
+    color: #B8931A !important;
+}
+
+/* Product Card Styling */
+.product-card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 8px 16px rgba(212, 175, 55, 0.15);
+    transition: all 0.3s ease;
+    background: white;
+    overflow: hidden;
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 24px rgba(212, 175, 55, 0.25);
+}
+
+.product-card img {
+    border-radius: 15px 15px 0 0;
+}
+
+/* Cart Styling */
+.cart-item {
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(212, 175, 55, 0.1);
+    transition: all 0.3s ease;
+}
+
+.cart-item:hover {
+    transform: translateX(5px);
+    box-shadow: 0 6px 12px rgba(212, 175, 55, 0.15);
+}
+
+/* Pagination */
+.pagination .page-link {
+    color: #D4AF37;
+    border-color: #F0C75E;
+    margin: 0 5px;
+    border-radius: 10px;
+}
+
+.pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border-color: #D4AF37;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFF9E6;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #D4AF37, #C5A028);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #C5A028, #B8931A);
+}
+
+/* Image Preview Box */
+.image-preview {
+    width: 200px;
+    height: 200px;
+    border: 3px dashed #D4AF37;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #FFF9E6;
+    overflow: hidden;
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}

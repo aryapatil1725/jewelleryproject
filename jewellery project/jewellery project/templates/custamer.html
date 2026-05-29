@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | Golden Spark</title>
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #d4af37 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .dashboard-container {
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            border: 2px solid #ffd700;
+            animation: slideInDown 0.8s ease;
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .welcome-title {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #d4af37, #b8860b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .customer-info {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(184, 134, 11, 0.05));
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .customer-name {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a2e;
+        }
+
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .action-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            border: 2px solid #f0c75e;
+            transition: all 0.4s ease;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .action-card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .action-card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(212, 175, 55, 0.4);
+            border-color: #d4af37;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .card-icon-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-icon-purple {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1a1a2e;
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .action-btn {
+            padding: 15px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: white;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 215, 0, 0.5);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #9b59b6, #8e44ad);
+            color: white;
+        }
+
+        .btn-purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(155, 89, 182, 0.5);
+        }
+
+        .logout-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #d4af37;
+            padding: 12px 25px;
+            border-radius: 25px;
+            color: #d4af37;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .logout-btn:hover {
+            background: #d4af37;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .logout-btn i {
+            margin-right: 8px;
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-title {
+                font-size: 2rem;
+            }
+
+            .customer-name {
+                font-size: 1.4rem;
+            }
+
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .logout-btn {
+                position: relative;
+                top: 0;
+                right: 0;
+                margin-bottom: 20px;
+                display: inline-block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="logout-btn">
+        <i class="fas fa-sign-out-alt"></i> Logout
+    </a>
+
+    <div class="dashboard-container">
+        <div class="container">
+            <!-- Welcome Section -->
+            <div class="welcome-section">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <i class="fas fa-gem" style="font-size: 5rem; color: #ffd700; animation: pulse 2s infinite;"></i>
+                </div>
+                
+                <h1 class="welcome-title text-center">Welcome to Golden Spark</h1>
+                <p class="welcome-subtitle text-center">Your Premium Jewellery Shopping Destination</p>
+                
+                <div class="customer-info">
+                    <div style="text-align: center;">
+                        <i class="fas fa-user-circle" style="font-size: 3rem; color: #d4af37; margin-bottom: 10px;"></i>
+                        <h2 class="customer-name">Hello, {{ session.get('cnm', 'Customer') }}!</h2>
+                        <p style="color: #666; margin-top: 10px;">We're delighted to have you here. Explore our exclusive collection and manage your orders.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Cards -->
+            <div class="action-cards">
+                <!-- Browse Products Card -->
+                <div class="action-card">
+                    <i class="fas fa-search card-icon card-icon-gold"></i>
+                    <h3 class="card-title">Browse Products</h3>
+                    <p class="card-description">
+                        Discover our exquisite collection of premium jewellery pieces crafted with love and precision.
+                    </p>
+                    <a href="/Searchallproduct" class="action-btn btn-gold">
+                        <i class="fas fa-shopping-bag" style="margin-right: 10px;"></i>
+                        Shop Now
+                    </a>
+                </div>
+
+                <!-- My Orders Card -->
+                <div class="action-card">
+                    <i class="fas fa-box-open card-icon card-icon-purple"></i>
+                    <h3 class="card-title">My Orders</h3>
+                    <p class="card-description">
+                        Track your orders, view purchase history, and manage your shipments all in one place.
+                    </p>
+                    <a href="/myorders" class="action-btn btn-purple">
+                        <i class="fas fa-list-alt" style="margin-right: 10px;"></i>
+                        View Orders
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 3000);
+        }
+
+        setInterval(createSparkle, 500);
+    </script>
+
+</body>
+</html>

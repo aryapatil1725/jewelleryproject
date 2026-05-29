@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card" style="max-width: 700px; margin: 0 auto;">
+        <div class="card-header">
+            <h3 class="mb-0">💎 Add Product</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST" enctype="multipart/form-data">
+
+                <div class="mb-3">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" name="pname" class="form-control" placeholder="Enter product name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Jewellery Type</label>
+                    <select name="typeid" class="form-control" required>
+                        <option value="">Select Type</option>
+                        {% for t in typelist %}
+                            <option value="{{ t.TypeId }}">{{ t.TypeName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Gender</label>
+                    <select name="gender" class="form-control" required>
+                        <option value="">Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Unisex">Unisex</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Weight (grams)</label>
+                    <input type="text" name="weight" class="form-control" placeholder="Enter weight in grams" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" name="qty" class="form-control" placeholder="Enter quantity" min="1" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea name="desc" class="form-control" rows="3" placeholder="Enter product description" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Product Photo</label>
+                    <input type="file" name="photo1" class="form-control" accept="image/*">
+                    <input type="hidden" name="existing_photo" value="{{ photo1 }}">
+                    <small class="text-muted">Upload product image (optional)</small>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                         Save Product
+                    </button>
+                    <a href="/productlist" class="btn btn-info">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

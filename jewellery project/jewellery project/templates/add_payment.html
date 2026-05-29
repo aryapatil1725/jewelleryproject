@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Payment</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card" style="max-width: 600px; margin: 0 auto;">
+        <div class="card-header">
+            <h3 class="mb-0">💳 Add Payment</h3>
+        </div>
+        <div class="card-body">
+            <form method="post">
+
+                <div class="mb-3">
+                    <label class="form-label">Order</label>
+                    <select name="orderid" class="form-control" required>
+                        <option value="">Select Order</option>
+                        {% for o in orderlist %}
+                            <option value="{{ o.OrderID }}">Order #{{ o.OrderID }} - {{ o.FirstName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Payment Date</label>
+                    <input type="date" name="paymentdate" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Amount Paid</label>
+                    <input type="text" name="amount" class="form-control" placeholder="Enter amount" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Payment Method</label>
+                    <select name="method" class="form-control" required>
+                        <option value="">Select Payment Method</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Card">Card</option>
+                        <option value="UPI">UPI</option>
+                        <option value="Bank Transfer">Bank Transfer</option>
+                        <option value="Check">Check</option>
+                    </select>
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                        Save Payment
+                    </button>
+                    <a href="/paymentlist" class="btn btn-info">
+                        Cancel
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

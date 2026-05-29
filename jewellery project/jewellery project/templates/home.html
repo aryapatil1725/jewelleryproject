@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golden Spark - Premium Jewellery Shop</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 50%, #d4af37 100%);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+        }
+
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 900px;
+        }
+
+        .logo-section {
+            margin-bottom: 40px;
+        }
+
+        .logo-section i {
+            font-size: 80px;
+            color: #ffd700;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ffd700, #ff6b6b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: none;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 50px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .action-btn {
+            padding: 18px 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+            color: #333;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn-purple {
+            background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);
+            color: white;
+        }
+
+        .btn-purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(155, 89, 182, 0.4);
+        }
+
+        .btn-white {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            color: #667eea;
+        }
+
+        .btn-white:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.4);
+        }
+
+        .features-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            font-size: 0.95rem;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .sparkle {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+        }
+
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .action-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <div class="hero-content">
+            <div class="logo-section">
+                <i class="fas fa-gem"></i>
+            </div>
+
+            <h1 class="hero-title">Welcome to Golden Spark</h1>
+            <p class="hero-subtitle">
+                Discover exquisite jewellery that tells your unique story. 
+                Premium quality, timeless elegance, and unforgettable moments await you.
+            </p>
+
+            <div class="action-buttons">
+                <a href="/login" class="action-btn btn-gold">
+                    <i class="fas fa-user-tie"></i>
+                    Admin Login
+                </a>
+                <a href="/custamerlogin" class="action-btn btn-purple">
+                    <i class="fas fa-shopping-bag"></i>
+                    Customer Login
+                </a>
+                <a href="/Searchallproduct" class="action-btn btn-white">
+                    <i class="fas fa-search"></i>
+                    Browse Products
+                </a>
+            </div>
+
+            
+
+    <script>
+        // Add sparkle effect
+        function createSparkle() {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + 'vw';
+            sparkle.style.top = Math.random() * 100 + 'vh';
+            sparkle.style.animationDelay = Math.random() * 3 + 's';
+            document.body.appendChild(sparkle);
+
+            setTimeout(() => {
+                sparkle.remove();
+            }, 3000);
+        }
+
+        setInterval(createSparkle, 500);
+    </script>
+
+</body>
+</html>

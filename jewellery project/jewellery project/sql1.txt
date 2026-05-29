@@ -1,0 +1,57 @@
+CREATE TABLE Customer (
+    CustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    FirstName VARCHAR(100),
+    LastName VARCHAR(100),
+    PhoneNumber VARCHAR(15),
+    Email VARCHAR(150),
+    Address VARCHAR(255),
+    Password VARCHAR(255)
+);
+
+CREATE TABLE JwelleryType (
+    TypeId INT PRIMARY KEY AUTO_INCREMENT,
+    TypeName VARCHAR(100)
+);
+
+CREATE TABLE Products (
+    ProductID INT PRIMARY KEY AUTO_INCREMENT,
+    ProductName VARCHAR(150),
+    TypeID INT,
+    ForGender VARCHAR(20),
+    Weight VARCHAR(100),
+    QuantityInStock INT,
+    Description VARCHAR(90),
+    Photo VARCHAR(70),
+    FOREIGN KEY (TypeID) REFERENCES JwelleryType(TypeId)
+);
+
+CREATE TABLE OrderMaster (
+    OrderID INT PRIMARY KEY AUTO_INCREMENT,
+    CustomerID INT,
+    OrderDate DATE,
+    TotalAmount DECIMAL(10,2),
+    LabourCharges DECIMAL(10,2),
+    GSTAmt DECIMAL(10,2),
+    GrandTotal DECIMAL(10,2),
+    FOREIGN KEY (CustomerID) REFERENCES Customer(CustomerID)
+);
+
+CREATE TABLE OrderDetails (
+    OrderDetailID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT,
+    ProductID INT,
+    Quantity INT,
+    Rate DECIMAL(10,2),
+    Subtotal DECIMAL(10,2),
+    FOREIGN KEY (OrderID) REFERENCES OrderMaster(OrderID),
+    FOREIGN KEY (ProductID) REFERENCES Products(ProductID)
+);
+
+CREATE TABLE Payment (
+    PaymentID INT PRIMARY KEY AUTO_INCREMENT,
+    OrderID INT,
+    PaymentDate DATE,
+    AmountPaid DECIMAL(10,2),
+    PaymentMethod VARCHAR(100),
+    FOREIGN KEY (OrderID) REFERENCES OrderMaster(OrderID)
+);

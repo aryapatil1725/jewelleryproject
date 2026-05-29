@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Details List</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">📋 Order Details List</h3>
+        </div>
+        <div class="card-body">
+            <a href="/orderdetails/add" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Add Order Details
+            </a>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Order ID</th>
+                            <th>Product ID</th>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Rate</th>
+                            <th>Subtotal</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for od in orderdetails %}
+                        <tr>
+                            <td><strong>{{ od.OrderDetailID }}</strong></td>
+                            <td>{{ od.OrderID }}</td>
+                            <td>{{ od.ProductID }}</td>
+                            <td>{{ od.ProductName }}</td>
+                            <td>{{ od.Quantity }}</td>
+                            <td>₹{{ "%.2f"|format(od.Rate) }}</td>
+                            <td>₹{{ "%.2f"|format(od.Subtotal) }}</td>
+                            <td>
+                                <a href="/orderdetails/edit/{{ od.OrderDetailID }}" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a href="/orderdetails/delete/{{ od.OrderDetailID }}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this order detail?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

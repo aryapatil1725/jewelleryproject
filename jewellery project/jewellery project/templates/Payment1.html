@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment - Jewellery Shop</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 100px 0 50px 0;
+        }
+
+        .payment-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .payment-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+            text-align: center;
+        }
+
+        .payment-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .payment-header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .payment-content {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.1);
+        }
+
+        .payment-form {
+            margin-bottom: 30px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F0C75E;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #F0C75E;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.1);
+        }
+
+        .form-group input[readonly] {
+            background: #FFF9E6;
+            color: #666;
+            cursor: not-allowed;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .payment-method {
+            position: relative;
+        }
+
+        .payment-method input[type="radio"] {
+            display: none;
+        }
+
+        .payment-method label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 10px;
+            border: 2px solid #F0C75E;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            height: 120px;
+        }
+
+        .payment-method label:hover {
+            border-color: #D4AF37;
+            background: #FFF9E6;
+        }
+
+        .payment-method input[type="radio"]:checked + label {
+            border-color: #D4AF37;
+            background: linear-gradient(135deg, #D4AF3715, #C5A02815);
+        }
+
+        .payment-method label i {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: #D4AF37;
+        }
+
+        .payment-method label span {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .summary-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #F0C75E;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .summary-label {
+            font-size: 15px;
+            font-weight: 500;
+            color: #666;
+        }
+
+        .summary-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a2e;
+        }
+
+        .summary-value.total {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+        }
+
+        .summary-total {
+            border-top: 2px solid #F0C75E;
+            margin-top: 20px;
+            padding-top: 20px;
+        }
+
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 25px;
+            padding: 15px;
+            background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+            border-radius: 12px;
+            color: #C5A028;
+            font-weight: 600;
+        }
+
+        .secure-badge i {
+            font-size: 20px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-cancel {
+            width: 100%;
+            padding: 15px 30px;
+            background: white;
+            color: #D4AF37;
+            border: 2px solid #D4AF37;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-cancel:hover {
+            background: #D4AF37;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .payment-content {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'base.html' %}
+
+    <div class="payment-wrapper">
+        <div class="payment-header">
+            <h1><i class="fas fa-credit-card me-3"></i>Complete Your Payment</h1>
+            <p>Secure payment processing for your order</p>
+        </div>
+
+        <div class="payment-content">
+            <div class="payment-form">
+                <h2 class="form-title"><i class="fas fa-edit me-2"></i>Payment Details</h2>
+                
+                <form method="post">
+                    <div class="form-group">
+                        <label for="orderid">
+                            <i class="fas fa-shopping-bag me-2"></i>Order ID
+                        </label>
+                        <input type="text" id="orderid" name="orderid" 
+                               value="{{ ordid }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="paymentdate">
+                            <i class="fas fa-calendar-alt me-2"></i>Payment Date
+                        </label>
+                        <input type="date" id="paymentdate" name="paymentdate" 
+                               value="{{ today }}">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="amount">
+                            <i class="fas fa-rupee-sign me-2"></i>Amount to Pay
+                        </label>
+                        <input type="text" id="amount" name="amount" 
+                               value="{{ amount }}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            <i class="fas fa-wallet me-2"></i>Payment Method
+                        </label>
+                        <div class="payment-methods">
+                            <div class="payment-method">
+                                <input type="radio" name="method" id="cash" value="Cash" required>
+                                <label for="cash">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                    <span>Cash</span>
+                                </label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" name="method" id="card" value="Credit Card">
+                                <label for="card">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Card</span>
+                                </label>
+                            </div>
+                            <div class="payment-method">
+                                <input type="radio" name="method" id="upi" value="UPI">
+                                <label for="upi">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span>UPI</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-lock me-2"></i>Confirm & Pay
+                    </button>
+                </form>
+
+                <a href="/Payment1" class="btn-cancel">
+                    <i class="fas fa-times me-2"></i>Cancel Payment
+                </a>
+            </div>
+
+            <div class="order-summary">
+                <h2 class="summary-title"><i class="fas fa-receipt me-2"></i>Order Summary</h2>
+                
+                <div class="summary-item">
+                    <span class="summary-label">Order ID</span>
+                    <span class="summary-value">#{{ ordid }}</span>
+                </div>
+                
+                <div class="summary-item">
+                    <span class="summary-label">Payment Date</span>
+                    <span class="summary-value">{{ today }}</span>
+                </div>
+                
+                <div class="summary-item summary-total">
+                    <span class="summary-label" style="font-weight: 600; font-size: 18px;">Total Amount</span>
+                    <span class="summary-value total">₹{{ amount }}</span>
+                </div>
+
+                <div class="secure-badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>100% Secure Payment</span>
+                </div>
+
+                <div style="margin-top: 20px; padding: 15px; background: #FFF9E6; border-radius: 12px;">
+                    <p style="font-size: 13px; color: #666; margin-bottom: 8px;">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Your payment is processed securely
+                    </p>
+                    <p style="font-size: 12px; color: #999; margin: 0;">
+                        All transactions are encrypted and secure
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Jewellery Management System{% endblock %}</title>
+    <link href="{{ url_for('static', filename='bootstrap.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='style.css') }}" rel="stylesheet"/>
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .navbar-brand {
+            font-size: 1rem;
+            padding: 0.5rem 0;
+            color: #D4AF37 !important;
+        }
+        .navbar-nav .nav-link {
+            font-size: 0.875rem;
+            padding: 0.5rem 0.75rem;
+            color: #D4AF37 !important;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background: #ffffff; padding: 0.5rem 0; border-bottom: 2px solid #D4AF37;">
+    <div class="container">
+        <a class="navbar-brand" href="/">💎 Jewellery Management</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/AdminDashboard">Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/productlist">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/typelist">Types</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/customerlist">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/orderlist">Orders</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/reports">Reports</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+
+</body>
+</html>

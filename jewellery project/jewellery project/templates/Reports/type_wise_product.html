@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Type Wise Product Report</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .report-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            border: 2px solid #F0C75E;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .report-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F0C75E;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #1a1a2e;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border: 2px solid #F0C75E;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        .form-control:focus, .form-select:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+        }
+        .search-section {
+            background: linear-gradient(135deg, #FFF9E6, #FFF3CD);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #F0C75E;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            border-color: #C5A028;
+        }
+        .table tbody tr:hover {
+            background-color: #FFF9E6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-container">
+    <h2>Type Wise Product Report</h2>
+
+    <form method="get">
+        <div class="search-section">
+            <div class="row">
+                <div class="col-md-10">
+                    <label for="typeid">Select Type</label>
+                    <select name="typeid" id="typeid" class="form-select">
+                        {% for t in typelist %}
+                            <option value="{{ t.TypeId }}">{{ t.TypeName }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100" style="background: linear-gradient(135deg, #D4AF37, #C5A028); border: none;">Search</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    {% if products %}
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Weight</th>
+                <th>Stock</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in products %}
+            <tr>
+                <td>{{ p.ProductID }}</td>
+                <td>{{ p.ProductName }}</td>
+                <td>{{ p.ForGender }}</td>
+                <td>{{ p.Weight }}</td>
+                <td>{{ p.QuantityInStock }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jewellery Type List</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="mb-0">🏷️ Jewellery Type List</h3>
+        </div>
+        <div class="card-body">
+            <a href="/type/add" class="btn btn-primary mb-3">
+                <i class="fas fa-plus"></i> Add Type
+            </a>
+
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in types %}
+                        <tr>
+                            <td><strong>{{ t.TypeId }}</strong></td>
+                            <td>{{ t.TypeName }}</td>
+                            <td>
+                                <a href="/type/edit/{{ t.TypeId }}" class="btn btn-warning btn-sm">
+                                    Edit
+                                </a>
+                                <a href="/type/delete/{{ t.TypeId }}" class="btn btn-danger btn-sm"
+                                   onclick="return confirm('Are you sure you want to delete this type?')">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
