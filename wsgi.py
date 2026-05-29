@@ -2,8 +2,16 @@
 import sys
 import os
 
+# Get the directory where this script is located
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Add the app directory to Python path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'jewellery project', 'jewellery project'))
+APP_DIR = os.path.join(BASE_DIR, 'jewellery project', 'jewellery project')
+if APP_DIR not in sys.path:
+    sys.path.insert(0, APP_DIR)
+
+# Change to the app directory to ensure imports work
+os.chdir(APP_DIR)
 
 # Import the Flask app
 from app import app
