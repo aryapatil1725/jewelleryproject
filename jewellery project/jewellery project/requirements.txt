@@ -15,4 +15,3 @@ python-dotenv==1.0.0
 # Additional Flask Extensions (if needed for future development)
 Flask-WTF==1.2.1
 email_validator==2.1.0
- +++++++ REPLACE

@@ -41,9 +41,7 @@ def rpt_order():
 @report_bp.route("/rptorderdetails")
 def rpt_orderdetails():
     details = orderdetailrepo.get_all()
-    return render_template("reports/rpt_orderdetails.html", details=details)
-
-
+    return render_template("Reports/rpt_orderdetails.html", details=details)
 
 @report_bp.route("/rptpayment")
 def rpt_payment():

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Details Report</title>
+    <link href="../static/bootstrap.css" rel="stylesheet"/>
+    <link href="../static/style.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: #FFFFFF;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        .report-container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1);
+            border: 2px solid #F0C75E;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .report-container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #F0C75E;
+        }
+        .table {
+            margin-top: 20px;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, #D4AF37, #C5A028);
+            color: white;
+            border-color: #C5A028;
+        }
+        .table tbody tr:hover {
+            background-color: #FFF9E6;
+        }
+    </style>
+</head>
+<body>
+
+<div class="report-container">
+    <h2>Order Details Report</h2>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Order Detail ID</th>
+                <th>Order ID</th>
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Rate</th>
+                <th>Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for d in details %}
+            <tr>
+                <td>{{ d.OrderDetailID }}</td>
+                <td>{{ d.OrderID }}</td>
+                <td>{{ d.ProductID }}</td>
+                <td>{{ d.ProductName if d.ProductName else 'N/A' }}</td>
+                <td>{{ d.Quantity }}</td>
+                <td>{{ d.Rate }}</td>
+                <td>{{ d.Subtotal }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>
